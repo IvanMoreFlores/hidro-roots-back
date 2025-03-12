@@ -18,6 +18,7 @@ async function bootstrap() {
     }),
   );
 
+  app.setGlobalPrefix('api/v1');
   // 🔹 Configurar Swagger
   const config = new DocumentBuilder()
     .setTitle('API de Productos')
@@ -27,13 +28,13 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document); // URL: http://localhost:4000/api/docs
+  SwaggerModule.setup('api/v1/docs', app, document); // URL: http://localhost:4000/api/docs
 
   const PORT = process.env.PORT || 4000;
   await app.listen(PORT);
 
   console.log(`🚀 Servidor corriendo en: http://localhost:${PORT}`);
-  console.log(`📄 Swagger disponible en: http://localhost:${PORT}/api/docs`);
+  console.log(`📄 Swagger disponible en: http://localhost:${PORT}/api/v1/docs`);
 }
 
 bootstrap();
