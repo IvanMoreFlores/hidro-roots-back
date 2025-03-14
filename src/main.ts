@@ -18,7 +18,7 @@ async function bootstrap() {
     }),
   );
 
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix('v1');
   // 🔹 Configurar Swagger
   const config = new DocumentBuilder()
     .setTitle('API de Productos')
