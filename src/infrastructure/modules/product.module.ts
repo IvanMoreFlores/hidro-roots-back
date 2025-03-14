@@ -8,6 +8,8 @@ import { UpdateProductUseCase } from '../../application/use-cases/update-product
 import { DeleteProductUseCase } from '../../application/use-cases/delete-product.use-case';
 import { FindProductByIdUseCase } from '../../application/use-cases/find-product-by-id.use-case';
 import { FindAllProductsUseCase } from 'src/application/use-cases/get-products.use-case';
+import { UploadService } from 'src/application/services/upload.service';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { FindAllProductsUseCase } from 'src/application/use-cases/get-products.u
     DeleteProductUseCase, // ✅ Agregado
     FindAllProductsUseCase, // ✅ Agregado
     FindProductByIdUseCase, // ✅ Agregado
+    UploadService,
+    ConfigService,
   ],
   exports: [
     CreateProductUseCase,
@@ -28,6 +32,8 @@ import { FindAllProductsUseCase } from 'src/application/use-cases/get-products.u
     DeleteProductUseCase,
     FindAllProductsUseCase,
     FindProductByIdUseCase,
+    UploadService,
+    ConfigService,
   ],
 })
 export class ProductModule {}

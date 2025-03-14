@@ -6,6 +6,8 @@ import {
   Param,
   Post,
   Put,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateProductUseCase } from '../../application/use-cases/create-product.use-case';
 import { UpdateProductDto } from '../../application/dto/update-product.dto';
@@ -14,7 +16,9 @@ import { FindAllProductsUseCase } from 'src/application/use-cases/get-products.u
 import { DeleteProductUseCase } from 'src/application/use-cases/delete-product.use-case';
 import { UpdateProductUseCase } from 'src/application/use-cases/update-product.use-case';
 import { FindProductByIdUseCase } from 'src/application/use-cases/find-product-by-id.use-case';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { UploadService } from 'src/application/services/upload.service';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Productos') // Grupo en Swagger
 @Controller('products')
@@ -25,6 +29,7 @@ export class ProductController {
     private readonly deleteProductUseCase: DeleteProductUseCase,
     private readonly getAllProductsUseCase: FindAllProductsUseCase,
     private readonly findProductByIdUseCase: FindProductByIdUseCase,
+    private readonly uploadService: UploadService,
   ) {}
 
   @Post()
@@ -53,5 +58,17 @@ export class ProductController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return this.deleteProductUseCase.execute(id);
+  }
+
+  @Post('upload')
+  @ApiOperation({ summary: 'Subir múltiples imágenes de productos' })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('images', 5)) // Máximo 5 imágenes
+  async uploadImages(@UploadedFiles() images: Express.Multer.File[]) {
+    // if (!images || images.length === 0) {
+    //   throw new BadRequestException('No se recibieron imágenes');
+    // }
+
+    return this.uploadService.uploadImages(images);
   }
 }

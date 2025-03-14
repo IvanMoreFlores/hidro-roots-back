@@ -28,6 +28,9 @@ export class Product {
 
   @Prop({ default: false })
   flagSend: boolean;
+
+  @Prop({ type: [String], required: true }) // Agregamos el array de imágenes obligatorio
+  images: string[];
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

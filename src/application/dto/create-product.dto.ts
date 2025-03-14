@@ -1,4 +1,6 @@
 import {
+  ArrayNotEmpty,
+  IsArray,
   IsBoolean,
   IsNotEmpty,
   IsNumber,
@@ -38,4 +40,10 @@ export class CreateProductDto {
   @IsBoolean()
   @IsOptional()
   flagSend?: boolean;
+
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsString({ each: true }) // Valida que cada elemento del array sea un string
+  @IsNotEmpty()
+  images: string[];
 }
