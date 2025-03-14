@@ -31,6 +31,9 @@ export class Product {
 
   @Prop({ type: [String], required: true }) // Agregamos el array de imágenes obligatorio
   images: string[];
+
+  @Prop({ required: true })
+  category: string;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

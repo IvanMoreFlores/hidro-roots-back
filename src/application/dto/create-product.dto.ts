@@ -46,4 +46,8 @@ export class CreateProductDto {
   @IsString({ each: true }) // Valida que cada elemento del array sea un string
   @IsNotEmpty()
   images: string[];
+
+  @IsString()
+  @IsNotEmpty()
+  category: string;
 }
