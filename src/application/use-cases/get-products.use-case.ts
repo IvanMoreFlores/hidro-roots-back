@@ -5,10 +5,22 @@ import { ProductRepository } from '../../infrastructure/repositories/product.rep
 export class FindAllProductsUseCase {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  async execute({ page = 1, limit = 10 }) {
+  async execute({ page, limit }: { page?: number; limit?: number }) {
+    if (!page || !limit) {
+      // Si no hay paginación, devolver todo
+      const products = await this.productRepository.findAll();
+      return {
+        data: products,
+        total: products.length,
+        page: 1,
+        totalPages: 1,
+      };
+    }
+
+    // Si hay paginación, calcular los valores de paginación
     const skip = (page - 1) * limit;
     const [products, total] = await Promise.all([
-      this.productRepository.findAll(skip, limit),
+      this.productRepository.findPaginated(skip, limit),
       this.productRepository.count(),
     ]);
 

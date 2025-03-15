@@ -13,8 +13,12 @@ export class ProductRepository {
     return new this.productModel(data).save();
   }
 
-  async findAll(skip: number, limit: number) {
-    return this.productModel.find().skip(skip).limit(limit).exec();
+  async findAll() {
+    return this.productModel.find().exec(); // Retorna todos los productos
+  }
+
+  async findPaginated(skip: number, limit: number) {
+    return this.productModel.find().skip(skip).limit(limit).exec(); // Paginado
   }
 
   async count() {
