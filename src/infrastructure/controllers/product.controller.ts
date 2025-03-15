@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -38,8 +39,11 @@ export class ProductController {
   }
 
   @Get()
-  async findAll() {
-    return this.getAllProductsUseCase.execute();
+  async findAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.getAllProductsUseCase.execute({ page, limit });
   }
 
   @Get(':id')
@@ -65,10 +69,6 @@ export class ProductController {
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FilesInterceptor('images', 5)) // Máximo 5 imágenes
   async uploadImages(@UploadedFiles() images: Express.Multer.File[]) {
-    // if (!images || images.length === 0) {
-    //   throw new BadRequestException('No se recibieron imágenes');
-    // }
-
     return this.uploadService.uploadImages(images);
   }
 }

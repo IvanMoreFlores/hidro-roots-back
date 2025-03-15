@@ -13,8 +13,12 @@ export class ProductRepository {
     return new this.productModel(data).save();
   }
 
-  async findAll(): Promise<Product[]> {
-    return this.productModel.find().exec();
+  async findAll(skip: number, limit: number) {
+    return this.productModel.find().skip(skip).limit(limit).exec();
+  }
+
+  async count() {
+    return this.productModel.countDocuments().exec();
   }
 
   async findById(id: string): Promise<Product | null> {
