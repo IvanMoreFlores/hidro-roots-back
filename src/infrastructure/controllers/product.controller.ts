@@ -20,6 +20,7 @@ import { FindProductByIdUseCase } from 'src/application/use-cases/find-product-b
 import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UploadService } from 'src/application/services/upload.service';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { DeleteImageProductUseCase } from 'src/application/use-cases/delete-image-product.use-case';
 
 @ApiTags('Productos') // Grupo en Swagger
 @Controller('products')
@@ -31,6 +32,7 @@ export class ProductController {
     private readonly getAllProductsUseCase: FindAllProductsUseCase,
     private readonly findProductByIdUseCase: FindProductByIdUseCase,
     private readonly uploadService: UploadService,
+    private readonly deleteImageProductUseCase: DeleteImageProductUseCase,
   ) {}
 
   @Post()
@@ -59,6 +61,17 @@ export class ProductController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return this.deleteProductUseCase.execute(id);
+  }
+
+  @Delete(':id/remove-image')
+  async removeImage(
+    @Param('id') productId: string,
+    @Query('imageUrl') imageUrl: string,
+  ) {
+    return this.deleteImageProductUseCase.execute(
+      productId,
+      decodeURIComponent(imageUrl),
+    );
   }
 
   @Post('upload')
