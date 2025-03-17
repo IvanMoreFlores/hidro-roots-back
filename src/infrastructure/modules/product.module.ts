@@ -10,6 +10,7 @@ import { FindProductByIdUseCase } from '../../application/use-cases/find-product
 import { FindAllProductsUseCase } from 'src/application/use-cases/get-products.use-case';
 import { UploadService } from 'src/application/services/upload.service';
 import { ConfigService } from '@nestjs/config';
+import { DeleteImageProductUseCase } from 'src/application/use-cases/delete-image-product.use-case';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ConfigService } from '@nestjs/config';
     DeleteProductUseCase, // ✅ Agregado
     FindAllProductsUseCase, // ✅ Agregado
     FindProductByIdUseCase, // ✅ Agregado
+    DeleteImageProductUseCase,
     UploadService,
     ConfigService,
   ],
@@ -32,6 +34,7 @@ import { ConfigService } from '@nestjs/config';
     DeleteProductUseCase,
     FindAllProductsUseCase,
     FindProductByIdUseCase,
+    DeleteImageProductUseCase,
     UploadService,
     ConfigService,
   ],
